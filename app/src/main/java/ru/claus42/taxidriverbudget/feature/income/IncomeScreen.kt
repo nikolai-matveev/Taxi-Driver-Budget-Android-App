@@ -1,4 +1,4 @@
-package ru.claus42.taxidriverbudget
+package ru.claus42.taxidriverbudget.feature.income
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,13 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun HomeScreen() {
+fun IncomeScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Hello World", color = Color.Black)
+        Text(text = "Income Screen", color = Color.Black)
     }
 }

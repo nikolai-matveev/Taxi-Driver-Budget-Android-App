@@ -1,27 +1,45 @@
 package ru.claus42.taxidriverbudget.navigation
 
+import android.R
+import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ru.claus42.taxidriverbudget.HomeScreen
+import ru.claus42.taxidriverbudget.feature.income.IncomeScreen
 import ru.claus42.taxidriverbudget.SplashScreen
+import ru.claus42.taxidriverbudget.feature.chart.ChartScreen
+import ru.claus42.taxidriverbudget.feature.goal.GoalScreen
+import ru.claus42.taxidriverbudget.feature.settings.SettingsScreen
 
 @Composable
-fun SetupNavGraph(navController: NavHostController) {
+fun ComponentActivity.SetupNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.SPLASH.route,
+        startDestination = Splash,
     ) {
-        composable(route = Screen.SPLASH.route) {
+        composable<Splash> {
             SplashScreen {
-                navController.navigate(Screen.HOME.route) {
-                    popUpTo(Screen.SPLASH.route) { inclusive = true }
+                navController.navigate(Income) {
+                    popUpTo(Splash) { inclusive = true }
                 }
             }
         }
-        composable(route = Screen.HOME.route) {
-            HomeScreen()
+
+        composable<Income> {
+            IncomeScreen()
+        }
+
+        composable<Goal> {
+            GoalScreen()
+        }
+
+        composable<Chart> {
+            ChartScreen()
+        }
+
+        composable<Settings> {
+            SettingsScreen()
         }
     }
 }
