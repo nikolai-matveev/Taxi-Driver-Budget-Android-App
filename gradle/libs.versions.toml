@@ -12,6 +12,10 @@ composeBom = "2024.12.01"
 navigationCompose = "2.8.5"
 materialComponents = "1.12.0"
 serialization = "1.6.3"
+dagger = "2.51.1"
+room = "2.6.1"
+timber = "5.0.1"
+orbit = "9.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,9 +38,72 @@ android-material = { group = "com.google.android.material", name = "material", v
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
+orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
+orbit-test = { module = "org.orbit-mvi:orbit-test", version.ref = "orbit" }
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
+
+[bundles]
+
+coreImplementation = [
+    "androidx-core-ktx",
+    "androidx-core-splashscreen",
+    "androidx-navigation-compose",
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-activity-compose",
+    "androidx-ui",
+    "androidx-ui-graphics",
+    "androidx-ui-tooling-preview",
+    "androidx-animation",
+    "androidx-material3",
+    "android-material",
+    "kotlinx-serialization-json"
+]
+
+implementation = [
+    "androidx-room-runtime",
+    "androidx-room-ktx",
+    "dagger",
+    "timber",
+    "orbit-compose",
+    "orbit-core",
+    "orbit-viewmodel",
+]
+
+debugImplementation = [
+    "androidx-ui-tooling",
+    "androidx-ui-test-manifest",
+]
+
+testImplemetation = [
+    "junit",
+    "orbit-test",
+]
+
+androidTestImplemetation = [
+    "androidx-junit",
+    "androidx-espresso-core",
+    "androidx-compose-bom",
+    "androidx-ui-test-junit4",
+]
+
+annotation-processor-libraries = ["androidx-room-compiler"]
+
+kapt-libraries = ["dagger-compiler", "androidx-room-compiler"]
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
