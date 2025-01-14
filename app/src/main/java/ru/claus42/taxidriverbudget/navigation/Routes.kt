@@ -2,17 +2,27 @@ package ru.claus42.taxidriverbudget.navigation
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-object Splash
+sealed interface Route
+sealed interface SubGraph
+
 
 @Serializable
-object Income
+data object SplashGraph : SubGraph {
+    @Serializable
+    data object SplashRoute : Route
+}
 
 @Serializable
-object  Goal
+data object MainGraph : SubGraph {
+    @Serializable
+    data object FinanceRoute : Route
 
-@Serializable
-object Chart
+    @Serializable
+    data object GoalRoute : Route
 
-@Serializable
-object Settings
+    @Serializable
+    data object ChartRoute : Route
+
+    @Serializable
+    data object SettingsRoute : Route
+}

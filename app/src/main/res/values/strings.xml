@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Taxi Driver Budget</string>
+
+    <!-- Bottom Navigation Tabs -->
+    <string name="nav_tab_finance">Finance</string>
+    <string name="nav_tab_goal">Goal</string>
+    <string name="nav_tab_chart">Chart</string>
+    <string name="nav_tab_settings">Settings</string>
 </resources>

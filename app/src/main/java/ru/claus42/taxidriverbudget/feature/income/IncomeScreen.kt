@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import ru.claus42.taxidriverbudget.ui.theme.TaxiDriverBudgetTheme
 
 @Composable
 fun IncomeScreen() {
@@ -18,5 +20,13 @@ fun IncomeScreen() {
         contentAlignment = Alignment.Center
     ) {
         Text(text = "Income Screen", color = Color.Black)
+    }
+}
+
+@Preview
+@Composable
+fun PreviewIncome() {
+    TaxiDriverBudgetTheme {
+        IncomeScreen()
     }
 }

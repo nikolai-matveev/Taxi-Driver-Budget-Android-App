@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Учёт таксиста</string>
+
+    <!-- Bottom Navigation Tabs -->
+    <string name="nav_tab_finance">Финансы</string>
+    <string name="nav_tab_goal">Цель</string>
+    <string name="nav_tab_chart">График</string>
+    <string name="nav_tab_settings">Настройки</string>
 </resources>

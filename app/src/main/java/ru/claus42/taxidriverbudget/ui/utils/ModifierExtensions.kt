@@ -1,4 +1,4 @@
-package ru.claus42.taxidriverbudget.ui.extension
+package ru.claus42.taxidriverbudget.ui.utils
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout

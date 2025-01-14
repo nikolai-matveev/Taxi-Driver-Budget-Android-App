@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.compose.rememberNavController
-import ru.claus42.taxidriverbudget.navigation.SetupNavGraph
+import ru.claus42.taxidriverbudget.navigation.RootNavHost
 import ru.claus42.taxidriverbudget.ui.theme.TaxiDriverBudgetTheme
+import ru.claus42.taxidriverbudget.ui.utils.SetSystemNavigationBarColor
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,10 +18,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            TaxiDriverBudgetTheme {
-                val navController = rememberNavController()
-                SetupNavGraph(navController = navController)
-            }
+            TaxiBudgetApp()
         }
+    }
+}
+
+@Composable
+fun TaxiBudgetApp() {
+    TaxiDriverBudgetTheme {
+        SetSystemNavigationBarColor(MaterialTheme.colorScheme.surface)
+
+        RootNavHost()
     }
 }
