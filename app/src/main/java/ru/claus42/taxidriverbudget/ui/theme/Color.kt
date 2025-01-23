@@ -14,3 +14,12 @@ val Pink40 = Color(0xFF7D5260)
 
 val FireBrick = Color(0xFFBD1212)
 
+// Finance Screen
+val IncomeChartColor = Color(0xFFE8E8E8)
+val ExpenseChartColor = Color(0xFFEE204D)
+val Gray = Color(0xFF737373)
+val CheckboxCheckedColor = Color(0xFFD9D9D9)
+val SelectedTabBgColor = Color(0xFFBD1212)
+val UnelectedTabBgColor = Color(0xFFE8E8E8)
+val AddOperationBtnColor = Color(0xFF48BC1F)
+

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import ru.claus42.taxidriverbudget.R
-import ru.claus42.taxidriverbudget.ui.utils.center
+import ru.claus42.taxidriverbudget.ui.modifier.center
 
 private val SplashTitleColor = Color(0xFFFBC803)
 private const val ANIMATION_TIME = 2000

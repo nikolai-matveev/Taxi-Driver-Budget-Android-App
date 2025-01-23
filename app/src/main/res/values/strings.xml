@@ -7,4 +7,22 @@
     <string name="nav_tab_goal">Goal</string>
     <string name="nav_tab_chart">Chart</string>
     <string name="nav_tab_settings">Settings</string>
+
+    <!-- Finance Screen -->
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="cash">Cash</string>
+    <string name="non_cash">Non-cash</string>
+    <string name="bank_transfer">Bank transfer</string>
+    <string name="tips">Tips</string>
+    <string name="fuel">Fuel</string>
+    <string name="food">Food</string>
+    <string name="other">Other</string>
+    <string name="mileage">Mileage</string>
+    <string name="income_per_week">Income per week</string>
+    <string name="income_per_year">Income per year</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="add_operation">Add operation</string>
+
 </resources>

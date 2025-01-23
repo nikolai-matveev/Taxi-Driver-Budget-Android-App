@@ -7,4 +7,21 @@
     <string name="nav_tab_goal">Цель</string>
     <string name="nav_tab_chart">График</string>
     <string name="nav_tab_settings">Настройки</string>
+
+    <!-- Finance Screen -->
+    <string name="income">Доход</string>
+    <string name="expense">Расход</string>
+    <string name="cash">Наличные</string>
+    <string name="non_cash">Безнал</string>
+    <string name="bank_transfer">Перевод</string>
+    <string name="tips">Чаевые</string>
+    <string name="fuel">Топливо</string>
+    <string name="food">Еда</string>
+    <string name="other">Прочее</string>
+    <string name="mileage">Пробег</string>
+    <string name="income_per_week">Доход за неделю</string>
+    <string name="income_per_year">Доход за год</string>
+    <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
+    <string name="add_operation">Добавить операцию</string>
 </resources>

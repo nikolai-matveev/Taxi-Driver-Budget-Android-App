@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ru.claus42.taxidriverbudget.navigation.MainNavHost
-import ru.claus42.taxidriverbudget.navigation.MainSubGraph
+import ru.claus42.taxidriverbudget.navigation.MainGraph
 import ru.claus42.taxidriverbudget.ui.component.BottomNavBar
 import ru.claus42.taxidriverbudget.ui.component.bottomNavBarTabs
 import ru.claus42.taxidriverbudget.ui.component.toNavBarTab
-import ru.claus42.taxidriverbudget.ui.utils.navigateSingleTopTo
+import ru.claus42.taxidriverbudget.utils.navigateSingleTopTo
 
 @Composable
 fun MainScreen() {
@@ -29,7 +29,7 @@ fun MainScreen() {
                 navBarTabs = bottomNavBarTabs,
                 onTabSelected = { tab ->
                     navController.navigateSingleTopTo(
-                        subGraph = MainSubGraph,
+                        subGraph = MainGraph,
                         route = tab.route
                     )
                 },

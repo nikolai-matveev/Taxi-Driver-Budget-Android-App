@@ -1,4 +1,4 @@
-package ru.claus42.taxidriverbudget.ui.utils
+package ru.claus42.taxidriverbudget.utils
 
 import android.app.Activity
 import androidx.compose.runtime.Composable
