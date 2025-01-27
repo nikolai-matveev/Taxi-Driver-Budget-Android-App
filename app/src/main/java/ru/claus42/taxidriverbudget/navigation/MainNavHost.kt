@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.claus42.taxidriverbudget.feature.chart.ChartScreen
+import ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.AddOperationsScreen
 import ru.claus42.taxidriverbudget.feature.goal.GoalScreen
 import ru.claus42.taxidriverbudget.feature.finance.screen.main.FinanceScreen
 import ru.claus42.taxidriverbudget.feature.settings.SettingsScreen
@@ -22,7 +23,19 @@ fun MainNavHost(
         modifier = modifier
     ) {
         composable<MainGraph.FinanceRoute> {
-            FinanceScreen()
+            FinanceScreen(
+                navigateAddOperationsScreen = {
+                    navController.navigate(MainGraph.AddOperationsRoute)
+                }
+            )
+        }
+
+        composable<MainGraph.AddOperationsRoute> {
+            AddOperationsScreen(
+                navBackToFinanceScreen = {
+                    navController.navigateUp()
+                }
+            )
         }
 
         composable<MainGraph.GoalRoute> {

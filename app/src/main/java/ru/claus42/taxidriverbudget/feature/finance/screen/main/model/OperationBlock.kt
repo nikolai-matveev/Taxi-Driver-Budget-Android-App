@@ -1,4 +1,4 @@
-package ru.claus42.taxidriverbudget.feature.finance.model
+package ru.claus42.taxidriverbudget.feature.finance.screen.main.model
 
 import java.time.ZonedDateTime
 

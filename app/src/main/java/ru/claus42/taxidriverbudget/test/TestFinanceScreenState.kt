@@ -4,8 +4,9 @@ import ru.claus42.taxidriverbudget.domain.model.CategoryType
 import ru.claus42.taxidriverbudget.domain.model.Currency
 import ru.claus42.taxidriverbudget.domain.model.FinanceFlowType
 import ru.claus42.taxidriverbudget.domain.model.FinanceOperation
-import ru.claus42.taxidriverbudget.feature.finance.view.model.FinanceScreenState
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.domain.model.Money
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel.FinanceScreenState
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
@@ -37,7 +38,7 @@ fun generateTestFinanceOperations(
         val randomDays = Random.nextLong(ChronoUnit.DAYS.between(startDate, endDate))
         val date = startDate.plusDays(randomDays)
 
-        val value = Random.nextInt(-8000, 8000)
+        val value = Random.nextLong(-8000, 8000) * 100
 
         val flowType = if (value < 0) FinanceFlowType.EXPENSE else FinanceFlowType.INCOME
         val categoryType = if (flowType == FinanceFlowType.EXPENSE) {
@@ -63,8 +64,10 @@ fun generateTestFinanceOperations(
         operations.add(
             FinanceOperation(
                 id = UUID.randomUUID(),
-                value = value,
-                currency = Currency.RUB,
+                money = Money(
+                    amountInCents = value,
+                    currency = Currency.RUB,
+                ) ,
                 flowType = flowType,
                 categoryType = categoryType,
                 date = date

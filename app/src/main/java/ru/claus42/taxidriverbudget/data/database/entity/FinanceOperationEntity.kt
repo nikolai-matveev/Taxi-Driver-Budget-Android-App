@@ -25,7 +25,7 @@ data class FinanceOperationEntity(
     val id: UUID,
 
     @ColumnInfo(name = OPERATION_VALUE)
-    val value: Int,
+    val amountInCents: Long,
 
     @ColumnInfo(name = OPERATION_CURRENCY)
     val currency: Currency,

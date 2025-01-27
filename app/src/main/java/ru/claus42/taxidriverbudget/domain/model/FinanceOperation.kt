@@ -5,8 +5,7 @@ import java.util.UUID
 
 data class FinanceOperation(
     val id: UUID,
-    val value: Int,
-    val currency: Currency,
+    val money: Money,
     val flowType: FinanceFlowType,
     val categoryType: CategoryType,
     val date: ZonedDateTime,

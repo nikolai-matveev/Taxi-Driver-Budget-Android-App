@@ -27,8 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
-import ru.claus42.taxidriverbudget.feature.finance.model.ChartInfo
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.ChartInfo
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 import ru.claus42.taxidriverbudget.ui.modifier.leftFadingEdge
 import ru.claus42.taxidriverbudget.ui.modifier.rightFadingEdge
 import ru.claus42.taxidriverbudget.ui.theme.ExpenseChartColor
@@ -44,7 +44,7 @@ fun ChartRow(
     lazyListState: LazyListState = rememberLazyListState(),
     onClickListener: (index: Int) -> Unit
 ) {
-    val maxValue = chartInfos.maxByOrNull { it.value }?.value ?: 0
+    val maxValue = abs(chartInfos.maxByOrNull { abs(it.money.amountInCents) }?.money?.amountInCents ?: 0)
     val fadingColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
 
     LazyRow(
@@ -81,15 +81,15 @@ private fun ChartColumn(
     modifier: Modifier = Modifier,
     index: Int,
     chartInfo: ChartInfo,
-    maxValue: Int,
+    maxValue: Long,
     maxChartHeight: Dp = 70.dp,
-    width: Dp = 44.dp,
+    width: Dp = 60.dp,
     incomeColor: Color = IncomeChartColor,
     expenseColor: Color = ExpenseChartColor,
     onClickListener: (index: Int) -> Unit
 ) {
-    val chartFraction = abs(chartInfo.value.toFloat() / maxValue)
-    val isIncome = chartInfo.value >= 0
+    val chartFraction = abs(chartInfo.money.amountInCents.toFloat() / maxValue)
+    val isIncome = chartInfo.money.amountInCents >= 0
 
     val targetHeight = chartFraction * maxChartHeight
     val animatedHeight by animateDpAsState(
@@ -108,7 +108,7 @@ private fun ChartColumn(
             },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val topLabel = "${chartInfo.value} ${chartInfo.currency.symbol}"
+        val topLabel = chartInfo.money.toString()
         val bottomLabel = with(chartInfo) {
             when (periodType) {
                 PeriodType.WEEK -> date.toLocalizedDayAndMonthNumeric()

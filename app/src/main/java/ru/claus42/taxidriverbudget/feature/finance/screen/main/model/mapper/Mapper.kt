@@ -1,15 +1,16 @@
-package ru.claus42.taxidriverbudget.feature.finance.model.mapper
+package ru.claus42.taxidriverbudget.feature.finance.screen.main.model.mapper
 
 import ru.claus42.taxidriverbudget.domain.model.Currency
 import ru.claus42.taxidriverbudget.domain.model.FinanceOperation
-import ru.claus42.taxidriverbudget.feature.finance.model.AggregatedFinanceState
-import ru.claus42.taxidriverbudget.feature.finance.model.ChartInfo
-import ru.claus42.taxidriverbudget.feature.finance.view.model.FinanceScreenState
-import ru.claus42.taxidriverbudget.feature.finance.model.HeaderBlock
-import ru.claus42.taxidriverbudget.feature.finance.model.OperationsWithDate
-import ru.claus42.taxidriverbudget.feature.finance.model.Operation
-import ru.claus42.taxidriverbudget.feature.finance.model.OperationBlock
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.domain.model.Money
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.AggregatedFinanceState
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.ChartInfo
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel.FinanceScreenState
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.HeaderBlock
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.OperationsWithDate
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.Operation
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.OperationBlock
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 import ru.claus42.taxidriverbudget.utils.getMonthAndYear
 import ru.claus42.taxidriverbudget.utils.toStartOfDay
 import java.time.ZonedDateTime
@@ -18,8 +19,10 @@ fun FinanceScreenState.toAggregatedFinanceState(): AggregatedFinanceState {
     return AggregatedFinanceState(
         headerBlock = HeaderBlock(
             periodType = periodType,
-            fullIncome = operations.map(FinanceOperation::value).sum(),
-            currency = currency,
+            fullIncome = Money(
+                amountInCents = operations.sumOf { it.money.amountInCents },
+                currency = currency,
+            ),
             dateInterval = dateInterval
         ),
         periodType = periodType,
@@ -44,12 +47,14 @@ fun List<FinanceOperation>.toDayChartInfos(
     currency: Currency,
 ): List<ChartInfo> {
     return groupBy { it.date.toStartOfDay() }.toSortedMap().values.map { operationsByMonth ->
-        val totalValue = operationsByMonth.sumOf { it.value }
+        val totalValue = operationsByMonth.sumOf { it.money.amountInCents }
         val date = operationsByMonth[0].date.toStartOfDay()
 
         ChartInfo(
-            value = totalValue,
-            currency = currency,
+            money = Money(
+                amountInCents = totalValue,
+                currency = currency,
+            ),
             date = date,
             periodType = periodType,
         )
@@ -61,14 +66,16 @@ fun List<FinanceOperation>.toMonthChartInfos(
     currency: Currency,
 ): List<ChartInfo> {
     return groupBy { it.date.month }.toSortedMap().values.map { operationsByMonth ->
-        val totalValue = operationsByMonth.sumOf { it.value }
+        val totalValue = operationsByMonth.sumOf { it.money.amountInCents }
         val date = with(operationsByMonth[0].date) {
             withDayOfMonth(1).toLocalDate().atStartOfDay(this.zone)
         }
 
         ChartInfo(
-            value = totalValue,
-            currency = currency,
+            money = Money(
+                amountInCents = totalValue,
+                currency = currency,
+            ),
             date = date,
             periodType = periodType,
         )
@@ -93,6 +100,5 @@ fun FinanceOperation.toOperation(): Operation =
     Operation(
         uuid = id,
         categoryType = categoryType,
-        value = value,
-        currency = currency
+        money = money,
     )

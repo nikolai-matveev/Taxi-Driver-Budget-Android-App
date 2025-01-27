@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.claus42.taxidriverbudget.R
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 import ru.claus42.taxidriverbudget.ui.theme.SelectedTabBgColor
 import ru.claus42.taxidriverbudget.ui.theme.UnelectedTabBgColor
 

@@ -1,6 +1,6 @@
-package ru.claus42.taxidriverbudget.feature.finance.view.model
+package ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel
 
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 
 sealed class FinanceIntent {
     data object BackDate: FinanceIntent()

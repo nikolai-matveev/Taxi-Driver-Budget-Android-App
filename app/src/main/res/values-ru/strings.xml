@@ -9,6 +9,7 @@
     <string name="nav_tab_settings">Настройки</string>
 
     <!-- Finance Screen -->
+    <string name="add_new_operation">Добавьте новую операцию</string>
     <string name="income">Доход</string>
     <string name="expense">Расход</string>
     <string name="cash">Наличные</string>
@@ -23,5 +24,12 @@
     <string name="income_per_year">Доход за год</string>
     <string name="week">Неделя</string>
     <string name="month">Месяц</string>
-    <string name="add_operation">Добавить операцию</string>
+    <string name="no_operations">Пока что нет операций за период</string>
+
+    <!-- Add Operation Screen -->
+    <string name="select_date">Выберите дату</string>
+    <string name="save">Сохранить</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+
 </resources>

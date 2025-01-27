@@ -23,3 +23,7 @@ val SelectedTabBgColor = Color(0xFFBD1212)
 val UnelectedTabBgColor = Color(0xFFE8E8E8)
 val AddOperationBtnColor = Color(0xFF48BC1F)
 
+// Add Operation Screen
+val LightGray = Color(0xFFBCC3D0)
+val DarkGray = Color(0xFF626C77)
+

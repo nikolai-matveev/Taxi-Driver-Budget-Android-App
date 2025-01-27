@@ -1,12 +1,11 @@
-package ru.claus42.taxidriverbudget.feature.finance.model
+package ru.claus42.taxidriverbudget.feature.finance.screen.main.model
 
 import ru.claus42.taxidriverbudget.domain.model.CategoryType
-import ru.claus42.taxidriverbudget.domain.model.Currency
+import ru.claus42.taxidriverbudget.domain.model.Money
 import java.util.UUID
 
 data class Operation(
     val uuid: UUID,
     val categoryType: CategoryType,
-    val value: Int,
-    val currency: Currency,
+    val money: Money,
 )

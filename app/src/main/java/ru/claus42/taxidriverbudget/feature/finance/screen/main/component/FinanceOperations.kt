@@ -1,8 +1,10 @@
 package ru.claus42.taxidriverbudget.feature.finance.screen.main.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,13 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.claus42.taxidriverbudget.R
 import ru.claus42.taxidriverbudget.domain.model.CategoryType
-import ru.claus42.taxidriverbudget.feature.finance.model.OperationBlock
-import ru.claus42.taxidriverbudget.feature.finance.model.OperationsWithDate
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.OperationBlock
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.OperationsWithDate
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 import ru.claus42.taxidriverbudget.ui.modifier.bottomFadingEdge
 import ru.claus42.taxidriverbudget.ui.modifier.topFadingEdge
 import ru.claus42.taxidriverbudget.ui.theme.Gray
@@ -36,10 +39,11 @@ fun FinanceOperations(
 ) {
     val fadingColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
 
-    LazyColumn(
-        state = lazyListState,
-        modifier = modifier.run {
-            fillMaxWidth()
+    if (operationBlock.operationsWithDateList.isNotEmpty()) {
+        LazyColumn(
+            state = lazyListState,
+            modifier = modifier
+                .fillMaxWidth()
                 .topFadingEdge(
                     color = fadingColor,
                     isVisible = lazyListState.canScrollBackward,
@@ -48,16 +52,28 @@ fun FinanceOperations(
                     color = fadingColor,
                     isVisible = lazyListState.canScrollForward,
                 )
-        }
-    ) {
-        itemsIndexed(operationBlock.operationsWithDateList) { index, operationsWithDate ->
-            FinanceOperationBlock(
-                modifier = modifier,
-                periodType = operationBlock.periodType,
-                operationsWithDate = operationsWithDate,
-            ) {
-                onDateClick(index)
+
+        ) {
+            itemsIndexed(operationBlock.operationsWithDateList) { index, operationsWithDate ->
+                FinanceOperationBlock(
+                    modifier = modifier,
+                    periodType = operationBlock.periodType,
+                    operationsWithDate = operationsWithDate,
+                ) {
+                    onDateClick(index)
+                }
             }
+        }
+    } else {
+        Row(
+            modifier = modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = stringResource(R.string.no_operations),
+                color = Color.Gray
+            )
         }
     }
 }
@@ -71,7 +87,7 @@ private fun FinanceOperationBlock(
 ) {
     val (date, operations) = operationsWithDate
 
-    val dateText = when(periodType) {
+    val dateText = when (periodType) {
         PeriodType.WEEK -> date.toLocalizedDayAndMonthName()
         PeriodType.MONTH -> date.toLocalizedMonthName()
     }
@@ -97,9 +113,7 @@ private fun FinanceOperationBlock(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 val categoryText = stringResource(operation.categoryType.toStringResId())
-                val valueText = with(operation) {
-                    "$value ${currency.symbol}"
-                }
+                val valueText = operation.money.toString()
 
                 CircularCheckbox(
                     uuid = operation.uuid,
@@ -122,7 +136,7 @@ private fun FinanceOperationBlock(
 
 }
 
-private fun CategoryType.toStringResId() = when(this) {
+private fun CategoryType.toStringResId() = when (this) {
     CategoryType.CASH -> R.string.cash
     CategoryType.NON_CASH -> R.string.non_cash
     CategoryType.TRANSFER -> R.string.bank_transfer

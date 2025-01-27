@@ -3,15 +3,9 @@ package ru.claus42.taxidriverbudget.feature.finance.screen.main
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,26 +13,26 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.claus42.taxidriverbudget.R
-import ru.claus42.taxidriverbudget.feature.finance.model.mapper.toAggregatedFinanceState
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.mapper.toAggregatedFinanceState
 import ru.claus42.taxidriverbudget.feature.finance.screen.main.component.ChartRow
 import ru.claus42.taxidriverbudget.feature.finance.screen.main.component.FinanceHeader
 import ru.claus42.taxidriverbudget.feature.finance.screen.main.component.FinanceOperations
 import ru.claus42.taxidriverbudget.feature.finance.screen.main.component.PeriodTypeTabs
-import ru.claus42.taxidriverbudget.feature.finance.view.model.FinanceIntent
-import ru.claus42.taxidriverbudget.feature.finance.view.model.FinanceSideEffect
-import ru.claus42.taxidriverbudget.feature.finance.view.model.FinanceViewModel
-import ru.claus42.taxidriverbudget.ui.theme.AddOperationBtnColor
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel.FinanceIntent
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel.FinanceSideEffect
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel.FinanceViewModel
+import ru.claus42.taxidriverbudget.ui.component.BigGreenButton
 import ru.claus42.taxidriverbudget.ui.theme.TaxiDriverBudgetTheme
 
 @Composable
 fun FinanceScreen(
     viewModel: FinanceViewModel = hiltViewModel(),
+    navigateAddOperationsScreen: () -> Unit,
 ) {
     val state by viewModel.container.stateFlow.collectAsState()
     val aggregatedState by remember(state) {
@@ -92,24 +86,11 @@ fun FinanceScreen(
             viewModel.handleIntent(FinanceIntent.DateWithIndexClicked(it))
         }
 
-        Button(
-            onClick = {
-                viewModel.handleIntent(FinanceIntent.AddOperationClicked)
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = AddOperationBtnColor,
-                contentColor = Color.White,
-            ),
-            shape = RoundedCornerShape(10.dp),
-            modifier = Modifier
-                .padding(top = 22.dp)
-                .fillMaxWidth()
-                .height(49.dp)
+        BigGreenButton(
+            text = stringResource(R.string.add_new_operation),
+            modifier = Modifier.padding(top = 22.dp),
         ) {
-            Text(
-                text = stringResource(R.string.add_operation),
-                style = MaterialTheme.typography.bodyLarge
-            )
+            viewModel.handleIntent(FinanceIntent.AddOperationClicked)
         }
     }
 
@@ -117,7 +98,7 @@ fun FinanceScreen(
         viewModel.container.sideEffectFlow.collect { sideEffect ->
             when (sideEffect) {
                 FinanceSideEffect.NavigateToAddOperationScreen -> {
-                    //TODO: Add navigation
+                    navigateAddOperationsScreen()
                 }
 
                 is FinanceSideEffect.ScrollChartToPosition -> {
@@ -144,6 +125,6 @@ private val HORIZONTAL_SCREEN_PADDING = 20.dp
 @Composable
 fun PreviewFinance() {
     TaxiDriverBudgetTheme {
-        FinanceScreen()
+        FinanceScreen() {}
     }
 }

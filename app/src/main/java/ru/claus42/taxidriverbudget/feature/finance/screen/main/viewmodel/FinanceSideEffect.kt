@@ -1,4 +1,4 @@
-package ru.claus42.taxidriverbudget.feature.finance.view.model
+package ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel
 
 sealed class FinanceSideEffect {
     data object NavigateToAddOperationScreen : FinanceSideEffect()

@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import ru.claus42.taxidriverbudget.R
-import ru.claus42.taxidriverbudget.feature.finance.model.HeaderBlock
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.HeaderBlock
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 import ru.claus42.taxidriverbudget.ui.theme.Gray
 import ru.claus42.taxidriverbudget.utils.toLocalizedShort
 
@@ -28,7 +28,7 @@ fun FinanceHeader(
     onPeriodBack: () -> Unit,
     onPeriodForward: () -> Unit,
 ) {
-    val totalValueTitle = "${headerBlock.fullIncome} ${headerBlock.currency.symbol}"
+    val totalValueTitle = headerBlock.fullIncome.toString()
     val subtitleRes = when (headerBlock.periodType) {
         PeriodType.WEEK -> R.string.income_per_week
         PeriodType.MONTH -> R.string.income_per_year

@@ -1,11 +1,9 @@
-package ru.claus42.taxidriverbudget.feature.finance.view.model
+package ru.claus42.taxidriverbudget.feature.finance.screen.main.viewmodel
 
 import ru.claus42.taxidriverbudget.domain.model.Currency
 import ru.claus42.taxidriverbudget.domain.model.FinanceOperation
-import ru.claus42.taxidriverbudget.feature.finance.model.PeriodType
+import ru.claus42.taxidriverbudget.feature.finance.screen.main.model.PeriodType
 import java.time.ZonedDateTime
-
-private const val DAYS_IN_WEEK = 7L
 
 data class FinanceScreenState(
     val periodType: PeriodType,

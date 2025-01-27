@@ -18,6 +18,9 @@ data object MainGraph : SubGraph {
     data object FinanceRoute : Route
 
     @Serializable
+    data object AddOperationsRoute : Route
+
+    @Serializable
     data object GoalRoute : Route
 
     @Serializable

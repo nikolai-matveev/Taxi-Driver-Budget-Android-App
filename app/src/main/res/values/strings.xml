@@ -9,6 +9,7 @@
     <string name="nav_tab_settings">Settings</string>
 
     <!-- Finance Screen -->
+    <string name="add_new_operation">Add new operation</string>
     <string name="income">Income</string>
     <string name="expense">Expense</string>
     <string name="cash">Cash</string>
@@ -23,6 +24,12 @@
     <string name="income_per_year">Income per year</string>
     <string name="week">Week</string>
     <string name="month">Month</string>
-    <string name="add_operation">Add operation</string>
+    <string name="no_operations">There\'re no operations for the period yet</string>
+    
+    <!-- Add Operation Screen -->
+    <string name="select_date">Select date</string>
+    <string name="save">Save</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
