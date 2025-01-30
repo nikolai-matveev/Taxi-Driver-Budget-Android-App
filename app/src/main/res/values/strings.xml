@@ -32,4 +32,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
+    <!-- Goal Screen -->
+    <string name="goal_from_to">Goal from %s to %s</string>
+    <string name="add_new_goal">Add new goal</string>
+    <string name="no_goals">There\'re no goals yet</string>
 </resources>

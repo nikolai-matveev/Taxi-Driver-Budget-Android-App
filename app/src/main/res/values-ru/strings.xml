@@ -9,7 +9,7 @@
     <string name="nav_tab_settings">Настройки</string>
 
     <!-- Finance Screen -->
-    <string name="add_new_operation">Добавьте новую операцию</string>
+    <string name="add_new_operation">Добавить новую операцию</string>
     <string name="income">Доход</string>
     <string name="expense">Расход</string>
     <string name="cash">Наличные</string>
@@ -32,4 +32,8 @@
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
 
+    <!-- Goal Screen -->
+    <string name="goal_from_to">Цель с %s по %s</string>
+    <string name="add_new_goal">Добавить цель</string>
+    <string name="no_goals">Здесь пока что нет целей</string>
 </resources>

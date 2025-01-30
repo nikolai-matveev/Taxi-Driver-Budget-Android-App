@@ -27,3 +27,6 @@ val AddOperationBtnColor = Color(0xFF48BC1F)
 val LightGray = Color(0xFFBCC3D0)
 val DarkGray = Color(0xFF626C77)
 
+//Goal Screen
+val Yellow = Color(0xFFFFD54F)
+
