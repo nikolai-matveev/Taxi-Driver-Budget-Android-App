@@ -13,7 +13,12 @@ import javax.inject.Inject
 class GoalRepositoryImpl @Inject constructor(
     private val goalsDao: GoalsDao
 ) : GoalRepository {
-    override suspend fun add(goal: Goal) = goalsDao.insertGoal(goal.toEntity())
+    override suspend fun getGoalById(id: Int): Goal = goalsDao.getGoal(id).toDomainModel()
+    override fun getGoalFlowById(id: Int): Flow<Goal> {
+        return goalsDao.getGoalFlow(id).map(GoalEntity::toDomainModel)
+    }
+
+    override suspend fun insert(goal: Goal) = goalsDao.insertGoal(goal.toEntity())
 
     override suspend fun remove(goal: Goal) = goalsDao.deleteGoal(goal.toEntity())
 
@@ -21,4 +26,9 @@ class GoalRepositoryImpl @Inject constructor(
         goalsDao.getAllGoals().map { entityList ->
             entityList.map(GoalEntity::toDomainModel)
         }
+
+    override suspend fun clearRepository() {
+        goalsDao.clearTable()
+    }
+
 }

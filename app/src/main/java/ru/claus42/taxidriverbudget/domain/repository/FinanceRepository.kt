@@ -12,4 +12,5 @@ interface FinanceRepository {
     fun getFinanceOperationsInRangeFlow(start: ZonedDateTime, end: ZonedDateTime): Flow<List<FinanceOperation>>
     suspend fun getOperationsInPeriod(start: ZonedDateTime, end: ZonedDateTime): List<FinanceOperation>
     fun calculateProfitForCurrency(start: ZonedDateTime, end: ZonedDateTime, currency: Currency): Flow<Money>
+    suspend fun clearRepository()
 }

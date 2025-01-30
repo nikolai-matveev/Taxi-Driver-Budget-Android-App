@@ -68,4 +68,9 @@ class FinanceRepositoryImpl @Inject constructor(
                 Money(profitInCents, currency)
             }
     }
+
+    override suspend fun clearRepository() {
+        financesDao.clearTable()
+    }
+
 }

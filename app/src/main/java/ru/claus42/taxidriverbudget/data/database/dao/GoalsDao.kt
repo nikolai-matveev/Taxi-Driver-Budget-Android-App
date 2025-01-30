@@ -11,6 +11,12 @@ import ru.claus42.taxidriverbudget.data.database.entity.GoalEntity
 
 @Dao
 interface GoalsDao {
+    @Query("SELECT * FROM $GOALS_TABLE_NAME WHERE id = :id LIMIT 1")
+    suspend fun getGoal(id: Int): GoalEntity
+
+    @Query("SELECT * FROM $GOALS_TABLE_NAME WHERE id = :id LIMIT 1")
+    fun getGoalFlow(id: Int): Flow<GoalEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGoal(goal: GoalEntity)
 
@@ -19,4 +25,7 @@ interface GoalsDao {
 
     @Delete
     suspend fun deleteGoal(goal: GoalEntity)
+
+    @Query("DELETE FROM $GOALS_TABLE_NAME")
+    suspend fun clearTable()
 }

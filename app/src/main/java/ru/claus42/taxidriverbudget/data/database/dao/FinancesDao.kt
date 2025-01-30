@@ -12,7 +12,6 @@ import ru.claus42.taxidriverbudget.data.database.entity.OPERATION_DATE
 import ru.claus42.taxidriverbudget.data.database.entity.OPERATION_ID
 import ru.claus42.taxidriverbudget.data.database.entity.OPERATION_TABLE_NAME
 import ru.claus42.taxidriverbudget.data.database.entity.OPERATION_VALUE
-import ru.claus42.taxidriverbudget.domain.model.Currency
 import java.util.UUID
 
 @Dao
@@ -58,4 +57,7 @@ interface FinancesDao {
            """
     )
     fun calculateProfitForCurrency(startDate: String, endDate: String, currency: String): Flow<Long>
+
+    @Query("DELETE FROM $OPERATION_TABLE_NAME")
+    suspend fun clearTable()
 }
