@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 import ru.claus42.taxidriverbudget.data.database.entity.GOALS_TABLE_NAME
 import ru.claus42.taxidriverbudget.data.database.entity.GoalEntity
@@ -17,7 +18,7 @@ interface GoalsDao {
     @Query("SELECT * FROM $GOALS_TABLE_NAME WHERE id = :id LIMIT 1")
     fun getGoalFlow(id: Int): Flow<GoalEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun insertGoal(goal: GoalEntity)
 
     @Query("SELECT * FROM $GOALS_TABLE_NAME")

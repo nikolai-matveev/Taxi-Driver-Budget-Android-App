@@ -26,8 +26,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ru.claus42.taxidriverbudget.R
 import ru.claus42.taxidriverbudget.domain.model.CategoryType
 import ru.claus42.taxidriverbudget.domain.model.FinanceFlowType
-import ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.component.SelectDate
-import ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.component.TransactionInputField
+import ru.claus42.taxidriverbudget.ui.component.SelectDate
+import ru.claus42.taxidriverbudget.ui.component.MoneyInputField
 import ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.viewmodel.AddOperationIntent
 import ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.viewmodel.AddOperationSideEffect
 import ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.viewmodel.AddOperationViewModel
@@ -54,6 +54,7 @@ fun AddOperationsScreen(
             verticalArrangement = Arrangement.Center
         ) {
             SelectDate(
+                label = stringResource(R.string.select_date),
                 selectedDate = state.selectedDate
             ) {
                 viewModel.handleIntent(
@@ -121,7 +122,7 @@ fun AddOperationsScreen(
             when(state.financeFlowType) {
                 FinanceFlowType.INCOME -> {
                     incomeFields.forEach { (labelStringRes, categoryType) ->
-                        TransactionInputField(
+                        MoneyInputField(
                             label = stringResource(labelStringRes),
                             currency = state.currency,
                             financeFlowType = FinanceFlowType.INCOME,
@@ -135,7 +136,7 @@ fun AddOperationsScreen(
                 }
                 FinanceFlowType.EXPENSE -> {
                     expenseFields.forEach { (labelStringRes, categoryType) ->
-                        TransactionInputField(
+                        MoneyInputField(
                             label = stringResource(labelStringRes),
                             currency = state.currency,
                             financeFlowType = FinanceFlowType.EXPENSE,

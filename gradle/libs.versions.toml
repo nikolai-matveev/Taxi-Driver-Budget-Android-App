@@ -13,7 +13,7 @@ navigationCompose = "2.8.5"
 materialComponents = "1.12.0"
 serialization = "1.6.3"
 hilt = "2.50"
-hilt-navigation-compose = "1.1.0"
+hilt-navigation-compose = "1.2.0"
 room = "2.6.1"
 timber = "5.0.1"
 orbit = "9.0.0"
@@ -52,6 +52,7 @@ orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orb
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
 
@@ -102,7 +103,11 @@ androidTestImplemetation = [
 
 annotation-processor-libraries = ["androidx-room-compiler"]
 
-kapt-libraries = ["androidx-room-compiler", "hilt-compiler"]
+kapt-libraries = [
+    "androidx-room-compiler",
+    "hilt-compiler",
+#    "hilt-android-compiler",
+]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

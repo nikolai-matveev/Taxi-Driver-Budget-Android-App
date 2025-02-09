@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import ru.claus42.taxidriverbudget.R
 import ru.claus42.taxidriverbudget.domain.model.Currency
 import ru.claus42.taxidriverbudget.domain.model.Money
-import ru.claus42.taxidriverbudget.ui.modifier.center
 import ru.claus42.taxidriverbudget.ui.theme.TaxiDriverBudgetTheme
 import ru.claus42.taxidriverbudget.ui.theme.Yellow
 import ru.claus42.taxidriverbudget.utils.toLocalizedDayAndMonthNumeric
@@ -40,7 +39,11 @@ fun GoalBlock(
 ) {
     val start = startDate.toLocalizedDayAndMonthNumeric()
     val end = endDate.toLocalizedDayAndMonthNumeric()
-    val progressFraction = progressMoney.amountInCents.toFloat() / goalMoney.amountInCents
+    val progressFraction = if (goalMoney.amountInCents != 0L) {
+        progressMoney.amountInCents.toFloat() / goalMoney.amountInCents
+    } else {
+        1f
+    }
 
     Box(
         modifier = Modifier

@@ -15,13 +15,16 @@ data object SplashGraph : SubGraph {
 @Serializable
 data object MainGraph : SubGraph {
     @Serializable
-    data object FinanceRoute : Route
+    data object FinanceRoute : Route {
+        @Serializable
+        data object AddOperationsRoute : Route
+    }
 
     @Serializable
-    data object AddOperationsRoute : Route
-
-    @Serializable
-    data object GoalRoute : Route
+    data object GoalRoute : Route {
+        @Serializable
+        data class EditGoalRoute(val id: Int?) : Route
+    }
 
     @Serializable
     data object ChartRoute : Route

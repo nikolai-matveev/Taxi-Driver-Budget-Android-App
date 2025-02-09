@@ -49,5 +49,5 @@ val bottomNavBarTabs = listOf(
     SettingsNavBarTab,
 )
 
-fun NavDestination?.toNavBarTab(): NavBarTab =
-    bottomNavBarTabs.find { it.route::class.qualifiedName == this?.route } ?: FinanceNavBarTab
+fun NavDestination?.toNavBarTab(): NavBarTab? =
+    bottomNavBarTabs.find { it.route::class.qualifiedName == this?.route }

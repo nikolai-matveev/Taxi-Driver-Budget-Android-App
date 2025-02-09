@@ -20,7 +20,7 @@ class GetGoalProgressUseCaseImpl @Inject constructor(
             .flatMapLatest { goal ->
                 financeRepository.calculateProfitForCurrency(
                     start = goal.startDate,
-                    end = goal.endDate,
+                    end = goal.completionDate,
                     currency = goal.expectedProfit.currency
                 )
             }

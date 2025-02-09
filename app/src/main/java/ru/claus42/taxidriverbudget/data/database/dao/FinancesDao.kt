@@ -51,7 +51,7 @@ interface FinancesDao {
 
     @Query(
         """ 
-           SELECT SUM($OPERATION_VALUE) FROM $OPERATION_TABLE_NAME
+           SELECT COALESCE(SUM($OPERATION_VALUE), 0) FROM $OPERATION_TABLE_NAME
            WHERE $OPERATION_DATE BETWEEN :startDate AND :endDate 
            AND $OPERATION_CURRENCY = :currency
            """

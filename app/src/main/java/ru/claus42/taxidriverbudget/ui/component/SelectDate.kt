@@ -1,4 +1,4 @@
-package ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.component
+package ru.claus42.taxidriverbudget.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,16 +43,17 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectDate(
+    modifier: Modifier = Modifier,
+    label: String,
     selectedDate: ZonedDateTime,
     onDateSelected: (ZonedDateTime) -> Unit,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(vertical = 8.dp, horizontal = 20.dp)
     ) {
         Row(
@@ -62,7 +63,7 @@ fun SelectDate(
         ) {
             Column {
                 Text(
-                    text = stringResource(R.string.select_date),
+                    text = label,
                     style = MaterialTheme.typography.bodyLarge,
                     color = DarkGray,
                 )

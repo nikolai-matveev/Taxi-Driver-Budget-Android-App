@@ -1,4 +1,4 @@
-package ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.component
+package ru.claus42.taxidriverbudget.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,14 +22,25 @@ import ru.claus42.taxidriverbudget.domain.model.FinanceFlowType
 import ru.claus42.taxidriverbudget.ui.theme.FireBrick
 
 @Composable
-fun TransactionInputField(
+fun MoneyInputField(
     modifier: Modifier = Modifier,
     label: String,
     financeFlowType: FinanceFlowType,
     currency: Currency,
+    initValue: Long? = null,
     onValueChanged: (amountInCents: Long) -> Unit,
 ) {
-    var text by remember { mutableStateOf("") }
+
+    var text by remember {
+        val initText = initValue?.let {
+            convertAmountWithCentsToString(
+                amount = it,
+                showFractionDigits = currency.showFractionDigits
+            )
+        } ?: ""
+
+        mutableStateOf(initText)
+    }
 
     OutlinedTextField(
         modifier = modifier
@@ -81,4 +92,14 @@ private fun convertStringToAmountWithCents(
     val value = if (text.isEmpty()) 0L else (text.toDouble() * 100).toLong()
 
     return sign * value
+}
+
+private fun convertAmountWithCentsToString(
+    amount: Long,
+    showFractionDigits: Boolean,
+): String {
+    return if (showFractionDigits)
+        "${amount / 100}.${amount % 100}"
+    else
+        "${amount / 100}"
 }

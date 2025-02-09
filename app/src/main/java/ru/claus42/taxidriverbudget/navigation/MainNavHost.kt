@@ -5,10 +5,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import ru.claus42.taxidriverbudget.feature.chart.ChartScreen
 import ru.claus42.taxidriverbudget.feature.finance.screen.add.operation.AddOperationsScreen
 import ru.claus42.taxidriverbudget.feature.goal.main.GoalScreen
 import ru.claus42.taxidriverbudget.feature.finance.screen.main.FinanceScreen
+import ru.claus42.taxidriverbudget.feature.goal.edit.goal.EditGoalScreen
 import ru.claus42.taxidriverbudget.feature.settings.SettingsScreen
 
 @Composable
@@ -25,12 +27,12 @@ fun MainNavHost(
         composable<MainGraph.FinanceRoute> {
             FinanceScreen(
                 navigateAddOperationsScreen = {
-                    navController.navigate(MainGraph.AddOperationsRoute)
+                    navController.navigate(MainGraph.FinanceRoute.AddOperationsRoute)
                 }
             )
         }
 
-        composable<MainGraph.AddOperationsRoute> {
+        composable<MainGraph.FinanceRoute.AddOperationsRoute> {
             AddOperationsScreen(
                 navBackToFinanceScreen = {
                     navController.navigateUp()
@@ -40,13 +42,26 @@ fun MainNavHost(
 
         composable<MainGraph.GoalRoute> {
             GoalScreen(
-                navigateToEditGoalScreen = {
-                    //TODO
+                navigateToEditGoalScreen = { id ->
+                    navController.navigate(MainGraph.GoalRoute.EditGoalRoute(id))
                 },
                 navigateToAddGoalScreen = {
-                    //TODO
+                    navController.navigate(MainGraph.GoalRoute.EditGoalRoute(null))
                 }
             )
+        }
+
+        composable<MainGraph.GoalRoute.EditGoalRoute> { backStackEntry ->
+            val route = backStackEntry.toRoute<MainGraph.GoalRoute.EditGoalRoute>()
+            val id = route.id
+
+            EditGoalScreen(
+                id = id,
+                navBackToGoals = {
+                    navController.navigateUp()
+                }
+            )
+
         }
 
         composable<MainGraph.ChartRoute> {

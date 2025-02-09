@@ -18,7 +18,6 @@ fun ZonedDateTime.toLocalizedShort(locale: Locale = Locale.getDefault()): String
     return format(formatter)
 }
 
-
 fun ZonedDateTime.toLocalizedDayAndMonthNumeric(locale: Locale = Locale.getDefault()): String {
     val pattern = when (locale) {
         Locale.UK, Locale.FRENCH          -> "dd/MM"
@@ -44,6 +43,12 @@ fun ZonedDateTime.toLocalizedDayAndMonthName(locale: Locale = Locale.getDefault(
 
 fun ZonedDateTime.toStartOfDay(): ZonedDateTime {
     return this.truncatedTo(ChronoUnit.DAYS)
+}
+
+fun ZonedDateTime.toEndOfDay(
+    locale: Locale = Locale.getDefault()
+): ZonedDateTime {
+    return this.withHour(23).withMinute(59).withSecond(59).withNano(999_999_999)
 }
 
 fun ZonedDateTime.getMonthAndYear(): ZonedDateTime {

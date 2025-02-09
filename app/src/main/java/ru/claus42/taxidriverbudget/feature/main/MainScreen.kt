@@ -19,22 +19,25 @@ import ru.claus42.taxidriverbudget.utils.navigateSingleTopTo
 fun MainScreen() {
     val navController = rememberNavController()
     val currentBackStack by navController.currentBackStackEntryAsState()
+
     val currentDestination = currentBackStack?.destination
     val currentTab = currentDestination.toNavBarTab()
 
     Scaffold(
         bottomBar = {
-            BottomNavBar(
-                modifier = Modifier.navigationBarsPadding(),
-                navBarTabs = bottomNavBarTabs,
-                onTabSelected = { tab ->
-                    navController.navigateSingleTopTo(
-                        subGraph = MainGraph,
-                        route = tab.route
-                    )
-                },
-                currentTab = currentTab,
-            )
+            currentTab?.let {
+                BottomNavBar(
+                    modifier = Modifier.navigationBarsPadding(),
+                    navBarTabs = bottomNavBarTabs,
+                    onTabSelected = { tab ->
+                        navController.navigateSingleTopTo(
+                            subGraph = MainGraph,
+                            route = tab.route
+                        )
+                    },
+                    currentTab = currentTab,
+                )
+            }
         }
     ) { innerPadding ->
         MainNavHost(
@@ -43,3 +46,4 @@ fun MainScreen() {
         )
     }
 }
+

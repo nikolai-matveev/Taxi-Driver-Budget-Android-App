@@ -30,6 +30,7 @@ import ru.claus42.taxidriverbudget.feature.goal.main.viewmodel.GoalSideEffect
 import ru.claus42.taxidriverbudget.feature.goal.main.viewmodel.GoalViewModel
 import ru.claus42.taxidriverbudget.ui.component.BigGreenButton
 import ru.claus42.taxidriverbudget.ui.modifier.bottomFadingEdge
+import ru.claus42.taxidriverbudget.ui.modifier.center
 import ru.claus42.taxidriverbudget.ui.modifier.topFadingEdge
 
 
@@ -68,6 +69,7 @@ fun GoalScreen(
                     )
                     .weight(1f),
                 state = lazyListState,
+                verticalArrangement = Arrangement.spacedBy(45.dp)
             ) {
                 items(
                     items = state.goalsWithProgress,
@@ -77,22 +79,16 @@ fun GoalScreen(
                         progressMoney = progressMoney,
                         goalMoney = goal.expectedProfit,
                         startDate = goal.startDate,
-                        endDate = goal.endDate,
+                        endDate = goal.completionDate,
                         onClick = {
                             viewModel.handleIntent(GoalIntent.EditGoalClicked(goal.id))
                         }
                     )
                 }
             }
-
-            BigGreenButton(
-                text = stringResource(R.string.add_new_operation),
-                modifier = Modifier.padding(top = 22.dp),
-                onClick = { viewModel.handleIntent(GoalIntent.AddGoalClicked) }
-            )
         } else {
             Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().weight(1f),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
@@ -102,6 +98,11 @@ fun GoalScreen(
                 )
             }
         }
+        BigGreenButton(
+            text = stringResource(R.string.add_new_goal),
+            modifier = Modifier.padding(top = 22.dp),
+            onClick = { viewModel.handleIntent(GoalIntent.AddGoalClicked) }
+        )
     }
 
 

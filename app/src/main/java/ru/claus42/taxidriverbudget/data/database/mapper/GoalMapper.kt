@@ -7,7 +7,7 @@ import ru.claus42.taxidriverbudget.domain.model.Money
 fun Goal.toEntity(): GoalEntity = GoalEntity(
     id = id,
     startDate = startDate,
-    endDate = endDate,
+    endDate = completionDate,
     expectedProfitInCents = expectedProfit.amountInCents,
     currency = expectedProfit.currency,
 )
@@ -15,6 +15,6 @@ fun Goal.toEntity(): GoalEntity = GoalEntity(
 fun GoalEntity.toDomainModel(): Goal = Goal(
     id = id,
     startDate = startDate,
-    endDate = endDate,
+    completionDate = endDate,
     expectedProfit = Money(expectedProfitInCents, currency),
 )

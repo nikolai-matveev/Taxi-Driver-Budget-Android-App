@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Учёт таксиста</string>
 
+    <string name="save">Сохранить</string>
+
     <!-- Bottom Navigation Tabs -->
     <string name="nav_tab_finance">Финансы</string>
     <string name="nav_tab_goal">Цель</string>
@@ -28,7 +30,6 @@
 
     <!-- Add Operation Screen -->
     <string name="select_date">Выберите дату</string>
-    <string name="save">Сохранить</string>
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
 
@@ -36,4 +37,9 @@
     <string name="goal_from_to">Цель с %s по %s</string>
     <string name="add_new_goal">Добавить цель</string>
     <string name="no_goals">Здесь пока что нет целей</string>
+
+    <!-- Edit Goal Screen -->
+    <string name="start_date">Дата начала</string>
+    <string name="completion_date">Дата окончания</string>
+    <string name="amount_for_period">Сумма дохода за период</string>
 </resources>
