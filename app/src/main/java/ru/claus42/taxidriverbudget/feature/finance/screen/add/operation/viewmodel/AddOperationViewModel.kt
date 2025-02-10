@@ -23,14 +23,14 @@ class AddOperationViewModel @Inject constructor(
             selectedDate = ZonedDateTime.now(),
             financeFlowType = FinanceFlowType.INCOME,
             currency = Currency.RUB,
-            cashAmount = 0,
-            nonCashAmount = 0,
-            bankTransferAmount = 0,
-            tipsAmount = 0,
-            foodAmount = 0,
-            fuelAmount = 0,
-            mileageAmount = 0,
-            otherAmount = 0,
+            cashAmount = null,
+            nonCashAmount = null,
+            bankTransferAmount = null,
+            tipsAmount = null,
+            foodAmount = null,
+            fuelAmount = null,
+            mileageAmount = null,
+            otherAmount = null,
             operationMap = emptyMap(),
         )
     )
@@ -65,7 +65,7 @@ class AddOperationViewModel @Inject constructor(
                     }
                     updateState.copy(
                         operationMap = state.operationMap
-                                + (Pair(intent.flowType, intent.categoryType) to intent.value)
+                                + (Pair(intent.flowType, intent.categoryType) to (intent.value ?: 0))
                     )
                 }
             }

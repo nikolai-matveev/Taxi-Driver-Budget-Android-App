@@ -10,7 +10,7 @@ sealed class AddOperationIntent {
     data class SetOperationValue(
         val flowType: FinanceFlowType,
         val categoryType: CategoryType,
-        val value: Long,
+        val value: Long?,
     ): AddOperationIntent()
     data object AddOperationClicked: AddOperationIntent()
 }

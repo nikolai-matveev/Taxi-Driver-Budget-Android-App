@@ -16,16 +16,17 @@ import androidx.compose.ui.unit.dp
 import ru.claus42.taxidriverbudget.domain.model.Currency
 import ru.claus42.taxidriverbudget.domain.model.FinanceFlowType
 import ru.claus42.taxidriverbudget.ui.theme.FireBrick
+import ru.claus42.taxidriverbudget.utils.emptyString
 import kotlin.math.abs
 
 @Composable
 fun MoneyInputField(
     modifier: Modifier = Modifier,
     label: String,
-    amount: Long,
+    amount: Long?,
     financeFlowType: FinanceFlowType,
     currency: Currency,
-    onValueChanged: (amountInCents: Long) -> Unit,
+    onValueChanged: (amountInCents: Long?) -> Unit,
 ) {
     OutlinedTextField(
         modifier = modifier
@@ -34,7 +35,7 @@ fun MoneyInputField(
         value = convertAmountWithCentsToString(amount, currency.showFractionDigits),
         trailingIcon = { Text(currency.symbol, style = MaterialTheme.typography.bodyLarge) },
         onValueChange = { input ->
-            if (input.matchesMoney()) {
+            if (input.isBlank() || input.matchesMoney()) {
                 onValueChanged(convertStringToAmountWithCents(input, financeFlowType))
             }
         },
@@ -60,7 +61,9 @@ fun MoneyInputField(
 private fun convertStringToAmountWithCents(
     text: String,
     financeFlowType: FinanceFlowType
-): Long {
+): Long? {
+    if (text.isBlank()) return null
+
     val sign = when (financeFlowType) {
         FinanceFlowType.INCOME -> 1
         FinanceFlowType.EXPENSE -> -1
@@ -72,9 +75,11 @@ private fun convertStringToAmountWithCents(
 }
 
 private fun convertAmountWithCentsToString(
-    amount: Long,
+    amount: Long?,
     showFractionDigits: Boolean,
 ): String {
+    if (amount == null) return emptyString()
+
     val absAmount = abs(amount)
 
     return if (showFractionDigits)
@@ -83,5 +88,5 @@ private fun convertAmountWithCentsToString(
         "${absAmount / 100}"
 }
 
-private fun String.matchesMoney(): Boolean =
-    this.matches(Regex("^\\d*\\.?\\d{0,2}$")) || this.all { it.isDigit() }
+private fun String.matchesMoney(): Boolean = length < 10 &&
+        (this.matches(Regex("^\\d*\\.?\\d{0,2}$")) || this.all { it.isDigit() })

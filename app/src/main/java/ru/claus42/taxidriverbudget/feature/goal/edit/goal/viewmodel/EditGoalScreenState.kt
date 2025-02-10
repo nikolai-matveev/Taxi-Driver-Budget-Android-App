@@ -6,6 +6,6 @@ import java.time.ZonedDateTime
 data class EditGoalScreenState(
     val startDate: ZonedDateTime,
     val completionDate: ZonedDateTime,
-    val amountForPeriod: Long,
+    val amountForPeriod: Long?,
     val currency: Currency,
 )

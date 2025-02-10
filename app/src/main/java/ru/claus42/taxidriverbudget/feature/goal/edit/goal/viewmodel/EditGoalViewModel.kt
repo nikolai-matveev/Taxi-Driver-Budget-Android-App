@@ -26,7 +26,7 @@ class EditGoalViewModel @AssistedInject constructor(
         initialState = EditGoalScreenState(
             startDate = ZonedDateTime.now().toStartOfDay(),
             completionDate = ZonedDateTime.now().plusDays(7).toEndOfDay(),
-            amountForPeriod = 0L,
+            amountForPeriod = null,
             currency = Currency.RUB,
         )
     ) {
@@ -63,7 +63,7 @@ class EditGoalViewModel @AssistedInject constructor(
             startDate = state.startDate,
             completionDate = state.completionDate,
             expectedProfit = Money(
-                amountInCents = state.amountForPeriod,
+                amountInCents = state.amountForPeriod ?: 0,
                 currency = state.currency,
             ),
         )
