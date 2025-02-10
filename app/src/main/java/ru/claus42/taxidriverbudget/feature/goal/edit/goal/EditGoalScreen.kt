@@ -12,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,16 +24,16 @@ import ru.claus42.taxidriverbudget.R
 import ru.claus42.taxidriverbudget.domain.model.FinanceFlowType
 import ru.claus42.taxidriverbudget.feature.goal.edit.goal.viewmodel.EditGoalIntent
 import ru.claus42.taxidriverbudget.feature.goal.edit.goal.viewmodel.EditGoalSideEffect
-import ru.claus42.taxidriverbudget.ui.component.SelectDate
-import ru.claus42.taxidriverbudget.ui.component.MoneyInputField
 import ru.claus42.taxidriverbudget.feature.goal.edit.goal.viewmodel.EditGoalViewModel
 import ru.claus42.taxidriverbudget.ui.component.BigGreenButton
+import ru.claus42.taxidriverbudget.ui.component.MoneyInputField
+import ru.claus42.taxidriverbudget.ui.component.SelectDate
 import ru.claus42.taxidriverbudget.ui.theme.TaxiDriverBudgetTheme
 
 @Composable
 fun EditGoalScreen(
     id: Int? = null,
-    viewModel: EditGoalViewModel = hiltViewModel (
+    viewModel: EditGoalViewModel = hiltViewModel(
         creationCallback = { factory: EditGoalViewModel.Factory ->
             factory.create(id)
         }
@@ -41,6 +43,9 @@ fun EditGoalScreen(
     val scrollState = rememberScrollState()
 
     val state by viewModel.container.stateFlow.collectAsState()
+    val amountForPeriod by remember(state) {
+        derivedStateOf { state.amountForPeriod }
+    }
 
     Column(
         modifier = Modifier
@@ -79,7 +84,7 @@ fun EditGoalScreen(
                 label = stringResource(R.string.amount_for_period),
                 currency = state.currency,
                 financeFlowType = FinanceFlowType.INCOME,
-                initValue = state.amountForPeriod,
+                amount = state.amountForPeriod,
                 onValueChanged = { amountInCents ->
                     viewModel.handleIntent(
                         EditGoalIntent.SetOperationValue(amountInCents, state.currency)
@@ -110,6 +115,6 @@ fun EditGoalScreen(
 @Composable
 fun PreviewAddOperationScreen() {
     TaxiDriverBudgetTheme {
-        EditGoalScreen {  }
+        EditGoalScreen { }
     }
 }

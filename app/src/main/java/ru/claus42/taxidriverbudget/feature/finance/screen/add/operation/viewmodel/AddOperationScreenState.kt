@@ -9,5 +9,13 @@ data class AddOperationScreenState(
     val selectedDate: ZonedDateTime,
     val financeFlowType: FinanceFlowType,
     val currency: Currency,
+    val cashAmount: Long,
+    val nonCashAmount: Long,
+    val bankTransferAmount: Long,
+    val tipsAmount: Long,
+    val foodAmount: Long,
+    val fuelAmount: Long,
+    val mileageAmount: Long,
+    val otherAmount: Long,
     val operationMap: Map<Pair<FinanceFlowType, CategoryType>, Long>,
 )

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
+import ru.claus42.taxidriverbudget.domain.model.CategoryType
 import ru.claus42.taxidriverbudget.domain.model.Currency
 import ru.claus42.taxidriverbudget.domain.model.FinanceFlowType
 import ru.claus42.taxidriverbudget.domain.model.FinanceOperation
@@ -22,6 +23,14 @@ class AddOperationViewModel @Inject constructor(
             selectedDate = ZonedDateTime.now(),
             financeFlowType = FinanceFlowType.INCOME,
             currency = Currency.RUB,
+            cashAmount = 0,
+            nonCashAmount = 0,
+            bankTransferAmount = 0,
+            tipsAmount = 0,
+            foodAmount = 0,
+            fuelAmount = 0,
+            mileageAmount = 0,
+            otherAmount = 0,
             operationMap = emptyMap(),
         )
     )
@@ -44,7 +53,17 @@ class AddOperationViewModel @Inject constructor(
             }
             is AddOperationIntent.SetOperationValue -> {
                 reduce {
-                    state.copy(
+                    val updateState = when (intent.categoryType) {
+                        CategoryType.CASH -> state.copy(cashAmount = intent.value)
+                        CategoryType.NON_CASH -> state.copy(nonCashAmount = intent.value)
+                        CategoryType.TRANSFER -> state.copy(bankTransferAmount = intent.value)
+                        CategoryType.TIPS -> state.copy(tipsAmount = intent.value)
+                        CategoryType.FUEL -> state.copy(fuelAmount = intent.value)
+                        CategoryType.FOOD -> state.copy(foodAmount = intent.value)
+                        CategoryType.OTHER -> state.copy(otherAmount = intent.value)
+                        CategoryType.MILEAGE -> state.copy(mileageAmount = intent.value)
+                    }
+                    updateState.copy(
                         operationMap = state.operationMap
                                 + (Pair(intent.flowType, intent.categoryType) to intent.value)
                     )

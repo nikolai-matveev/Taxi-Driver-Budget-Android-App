@@ -9,10 +9,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,45 +16,26 @@ import androidx.compose.ui.unit.dp
 import ru.claus42.taxidriverbudget.domain.model.Currency
 import ru.claus42.taxidriverbudget.domain.model.FinanceFlowType
 import ru.claus42.taxidriverbudget.ui.theme.FireBrick
+import kotlin.math.abs
 
 @Composable
 fun MoneyInputField(
     modifier: Modifier = Modifier,
     label: String,
+    amount: Long,
     financeFlowType: FinanceFlowType,
     currency: Currency,
-    initValue: Long? = null,
     onValueChanged: (amountInCents: Long) -> Unit,
 ) {
-
-    var text by remember {
-        val initText = initValue?.let {
-            convertAmountWithCentsToString(
-                amount = it,
-                showFractionDigits = currency.showFractionDigits
-            )
-        } ?: ""
-
-        mutableStateOf(initText)
-    }
-
     OutlinedTextField(
         modifier = modifier
             .padding(horizontal = 10.dp)
             .fillMaxWidth(),
-        value = text,
+        value = convertAmountWithCentsToString(amount, currency.showFractionDigits),
         trailingIcon = { Text(currency.symbol, style = MaterialTheme.typography.bodyLarge) },
         onValueChange = { input ->
-            if (currency.showFractionDigits) {
-                if (input.matches(Regex("^\\d*\\.?\\d{0,2}$"))) {
-                    text = input
-                    onValueChanged(convertStringToAmountWithCents(text, financeFlowType))
-                }
-            } else {
-                if (input.all { it.isDigit() }) {
-                    text = input
-                    onValueChanged(convertStringToAmountWithCents(text, financeFlowType))
-                }
+            if (input.matchesMoney()) {
+                onValueChanged(convertStringToAmountWithCents(input, financeFlowType))
             }
         },
         label = { Text(label) },
@@ -98,8 +75,13 @@ private fun convertAmountWithCentsToString(
     amount: Long,
     showFractionDigits: Boolean,
 ): String {
+    val absAmount = abs(amount)
+
     return if (showFractionDigits)
-        "${amount / 100}.${amount % 100}"
+        "${absAmount / 100}.${absAmount % 100}"
     else
-        "${amount / 100}"
+        "${absAmount / 100}"
 }
+
+private fun String.matchesMoney(): Boolean =
+    this.matches(Regex("^\\d*\\.?\\d{0,2}$")) || this.all { it.isDigit() }

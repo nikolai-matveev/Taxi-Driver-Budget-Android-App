@@ -15,7 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,7 +52,9 @@ fun AddOperationsScreen(
             .padding(horizontal = 20.dp),
     ) {
         Column(
-            modifier = Modifier.weight(1f).verticalScroll(scrollState),
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.Center
         ) {
             SelectDate(
@@ -75,7 +79,7 @@ fun AddOperationsScreen(
                                 AddOperationIntent.SelectFinancialFlowType(FinanceFlowType.INCOME)
                             )
                         },
-                        colors = RadioButtonDefaults.colors().copy (
+                        colors = RadioButtonDefaults.colors().copy(
                             selectedColor = Color.Red,
                             unselectedColor = Color.Gray,
                         ),
@@ -94,7 +98,7 @@ fun AddOperationsScreen(
                                 AddOperationIntent.SelectFinancialFlowType(FinanceFlowType.EXPENSE)
                             )
                         },
-                        colors = RadioButtonDefaults.colors().copy (
+                        colors = RadioButtonDefaults.colors().copy(
                             selectedColor = Color.Red,
                             unselectedColor = Color.Gray,
                         ),
@@ -105,44 +109,72 @@ fun AddOperationsScreen(
                 }
             }
 
-            val incomeFields = listOf(
-                Pair(R.string.cash, CategoryType.CASH),
-                Pair(R.string.non_cash, CategoryType.NON_CASH),
-                Pair(R.string.bank_transfer, CategoryType.TRANSFER),
-                Pair(R.string.tips, CategoryType.TIPS),
-            )
+            val incomeFields = remember(state) {
+                listOf(
+                    Triple(R.string.cash, CategoryType.CASH, derivedStateOf { state.cashAmount }),
+                    Triple(
+                        R.string.non_cash,
+                        CategoryType.NON_CASH,
+                        derivedStateOf { state.nonCashAmount }),
+                    Triple(
+                        R.string.bank_transfer,
+                        CategoryType.TRANSFER,
+                        derivedStateOf { state.bankTransferAmount }),
+                    Triple(R.string.tips, CategoryType.TIPS, derivedStateOf { state.tipsAmount }),
+                )
+            }
 
-            val expenseFields = listOf(
-                Pair(R.string.fuel, CategoryType.FUEL),
-                Pair(R.string.food, CategoryType.FOOD),
-                Pair(R.string.other, CategoryType.OTHER),
-                Pair(R.string.mileage, CategoryType.MILEAGE),
-            )
 
-            when(state.financeFlowType) {
+            val expenseFields = remember(state) {
+                listOf(
+                    Triple(R.string.fuel, CategoryType.FUEL, derivedStateOf { state.fuelAmount }),
+                    Triple(R.string.food, CategoryType.FOOD, derivedStateOf { state.foodAmount }),
+                    Triple(
+                        R.string.mileage,
+                        CategoryType.MILEAGE,
+                        derivedStateOf { state.mileageAmount }),
+                    Triple(
+                        R.string.other,
+                        CategoryType.OTHER,
+                        derivedStateOf { state.otherAmount }),
+                )
+            }
+
+            when (state.financeFlowType) {
                 FinanceFlowType.INCOME -> {
-                    incomeFields.forEach { (labelStringRes, categoryType) ->
+                    incomeFields.forEach { (labelStringRes, categoryType, amountState) ->
                         MoneyInputField(
                             label = stringResource(labelStringRes),
                             currency = state.currency,
                             financeFlowType = FinanceFlowType.INCOME,
+                            amount = amountState.value,
                             onValueChanged = { amountInCents ->
                                 viewModel.handleIntent(
-                                    AddOperationIntent.SetOperationValue(FinanceFlowType.INCOME, categoryType, amountInCents)
+                                    AddOperationIntent.SetOperationValue(
+                                        FinanceFlowType.INCOME,
+                                        categoryType,
+                                        amountInCents
+                                    )
                                 )
                             }
                         )
                     }
                 }
+
                 FinanceFlowType.EXPENSE -> {
-                    expenseFields.forEach { (labelStringRes, categoryType) ->
+                    expenseFields.forEach { (labelStringRes, categoryType, amountState) ->
                         MoneyInputField(
                             label = stringResource(labelStringRes),
                             currency = state.currency,
                             financeFlowType = FinanceFlowType.EXPENSE,
+                            amount = amountState.value,
                             onValueChanged = { amountInCents ->
                                 viewModel.handleIntent(
-                                    AddOperationIntent.SetOperationValue(FinanceFlowType.EXPENSE, categoryType, amountInCents)
+                                    AddOperationIntent.SetOperationValue(
+                                        FinanceFlowType.EXPENSE,
+                                        categoryType,
+                                        amountInCents
+                                    )
                                 )
                             }
                         )
